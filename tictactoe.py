@@ -32,6 +32,9 @@ class TTTMap:
             self.map[i][j] = "o"
             print("\nPlayer 1 made a move on {}.\nThe Map loks like this:".format(coords))
             self.printMap()
+            if self.checkResult():
+                print("Player 1 Wins!")
+                exit()
             return True
         else:
             return False
@@ -48,6 +51,9 @@ class TTTMap:
             self.map[i][j] = "x"
             print("\nPlayer 2 made a move on {}.\nThe Map loks like this:".format(coords))
             self.printMap()
+            if self.checkResult():
+                print("Player 2 Wins!")
+                exit()
             return True
         else:
             return False
@@ -63,8 +69,26 @@ class TTTMap:
         for i in self.map:
             if "".join(i)=="ooo" or "".join(i)=="xxx":
                 return True
-game = TTTMap()
-game.printMap()
-game.player1move([1,1])
-game.player2move([1,1])
-game.player2move([1,2])
+        temp = [[self.map[j][i] for j in range(len(self.map[i]))] for i in range(len(self.map))]
+        for i in temp:
+            if "".join(i)=="ooo" or "".join(i)=="xxx":
+                return True
+        temp1 = ""
+        temp2 = ""
+        for i in range(len(self.map)):
+            temp1 += self.map[i][i]
+            temp2 += self.map[len(self.map)-1-i][i]
+        if temp1 == "ooo" or temp2 == "ooo" or temp1 == "xxx" or temp2 == "xxx":
+            return True
+        return False
+
+g = TTTMap()
+g.player1move([0,0])
+g.player2move([0,1])
+g.player1move([1,1])
+g.player2move([0,2])
+g.player1move([2,2])
+g.player2move([1,2])
+g.player1move([2,0])
+g.player2move([2,1])
+g.player1move([2,2])
